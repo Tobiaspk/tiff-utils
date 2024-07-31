@@ -10,14 +10,14 @@ def cli():
 
 @cli.command()
 def version():
-    click.echo('0.1.0')
+    click.echo(VERSION)
 
 @cli.command(name='convert-to-tiff')
-@click.argument('read_path', type=click.Path(exists=True), required=True)
-@click.argument('write_path', type=click.Path(), required=True)
+@click.argument('read-path', type=click.Path(exists=True), required=True)
+@click.argument('write-path', type=click.Path(), required=True)
 @click.option('--subresolutions', type=int, default=4)
-@click.option('--grid_size', type=int, default=1)
-@click.option('--max_workers', type=int, default=None)
+@click.option('--grid-size', type=int, default=1)
+@click.option('--max-workers', type=int, default=None)
 def convert_to_tiff_cli(read_path, write_path, subresolutions, grid_size, max_workers):
     convert_to_tiff(read_path, write_path, subresolutions, grid_size, max_workers)
     
