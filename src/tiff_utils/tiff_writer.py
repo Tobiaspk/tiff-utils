@@ -12,4 +12,3 @@ def write_tiff(array, path, **kwargs):
         tifffile.imwrite(f.name, array)
         convert_to_tiff(f.name, path, **kwargs)
         assert os.path.exists(path)
-        raise ValueError(f"Temporary file in {f.file}")
