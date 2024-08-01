@@ -11,7 +11,7 @@ Functions:
 
 Usage:
     Convert an image to TIFF format:
-    
+
         convert_to_tiff(read_path, write_path, subresolutions=7, grid_size=1)
 """
 
