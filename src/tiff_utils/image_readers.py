@@ -43,7 +43,7 @@ from typing import Union, Literal
 
 
 _valid_image_formats = dict()
-
+_not_supported_formats = ["jpg", "JPG"]
 
 # Decorator to register new image formats below
 def _register_image_format(file_type):
@@ -692,9 +692,33 @@ def get_image_reader(
         (e.g., a directory)
     """
     _, extension = os.path.splitext(file_path)
+    if extension in _not_supported_formats:
+        raise ValueError(f"Unsupported file format: {extension}.")
     if extension not in _valid_image_formats:
         try:
             return BioFormatsReader(file_path, **kwargs)  # default reader
         except:
             raise ValueError("Unsupported file format")
     return _valid_image_formats[extension](file_path, **kwargs)
+
+
+def read_image(
+    file_path: typing.Union[str, os.PathLike],
+    level: int=0,
+    **kwargs,
+) -> np.ndarray:
+    """
+    Read an image file and return the image data as a numpy array.
+
+    Parameters
+    ----------
+    file_path : typing.Union[str, os.PathLike]
+        The file path of the image to load
+
+    Returns
+    -------
+    np.ndarray
+        The image data as a numpy array
+    """
+    with get_image_reader(file_path, level=level) as reader:
+        return reader.read(**kwargs)
